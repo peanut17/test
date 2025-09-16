@@ -1,0 +1,57 @@
+3. 설치 절차 (폐쇄망)
+
+온라인 PC에서 zip 다운로드
+
+오프라인 서버(Ubuntu)에 복사
+
+압축 풀지 말고 /var/lib/grafana/plugins/ 안에 그대로 두거나, 풀어서 디렉터리 구조(grafana-clickhouse-datasource/) 유지
+
+sudo mkdir -p /var/lib/grafana/plugins
+sudo unzip grafana-clickhouse-datasource-3.6.2.zip -d /var/lib/grafana/plugins/
+
+
+grafana.ini 수정
+
+[plugins]
+allow_loading_unsigned_plugins = grafana-clickhouse-datasource
+
+
+Grafana 재시작
+
+sudo systemctl restart grafana-server
+
+4. 확인
+
+Grafana 접속 → Connections → Data sources → Add data source → ClickHouse 가 보이면 성공입니다.
+
+
+
+--------------
+
+Grafana 플러그인 디렉터리에 압축 풀기
+
+sudo mkdir -p /var/lib/grafana/plugins
+sudo unzip vertamedia-clickhouse-datasource-3.4.5.zip -d /var/lib/grafana/plugins/
+
+
+(zip을 푼 결과 폴더 이름이 vertamedia-clickhouse-datasource 인지 확인)
+
+grafana.ini 설정 업데이트
+/etc/grafana/grafana.ini (또는 설치 경로에 있는 설정 파일) 열어서 다음 부분 수정:
+
+[plugins]
+allow_loading_unsigned_plugins = vertamedia-clickhouse-datasource
+
+
+Grafana 재시작
+
+sudo systemctl restart grafana-server
+
+
+Grafana UI 접속 → Connections → Data sources → “ClickHouse” 찾기 → 데이터소스 추가
+
+프로토콜: HTTP 또는 Native TCP
+
+URL: http://<ClickHouse 호스트>:8123 (HTTP) 또는 9000 (Native)
+
+DB, 유저, 패스워드 등 입력
